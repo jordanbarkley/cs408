@@ -1,0 +1,12 @@
+3 1 6
+S 1
+NS 4
+S 6
+
+1 low
+2 low
+3 high
+4 high
+5 tie
+6 high
+
