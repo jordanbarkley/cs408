@@ -8,13 +8,14 @@ public class Homework1 {
     public int B;
     public int N;
     public int T;
-    public Friend[] friends;
+    public Player[] friends;
+    public Player[] opponents;
     public int[] times;
 
     public static void main(String[] args) {
-        System.out.printf("Hello World!\n");
         Homework1 h = new Homework1();
         h.runTest("input0.txt", 4);
+        // h.runTest("out.txt", 5000000);
     }
 
     public boolean runTest(String filename, int expected) {
@@ -36,7 +37,7 @@ public class Homework1 {
         this.B = s.nextInt();
 
         // init friends array
-        this.friends = new Friend[this.N];
+        this.friends = new Player[this.N];
         boolean hasSword;
         int timePlayed;
 
@@ -48,7 +49,7 @@ public class Homework1 {
                 hasSword = false;
             }
             timePlayed = s.nextInt();
-            Friend friend = new Friend(timePlayed, hasSword);
+            Player friend = new Player(timePlayed, hasSword);
             this.friends[i] = friend;
         }
 
@@ -59,8 +60,8 @@ public class Homework1 {
         int opponentsWithSword = 0;
 
         // friend objects for finding P'
-        Friend friendLow;
-        Friend friendHigh;
+        Player friendLow;
+        Player friendHigh;
 
         // P' index
         int j = 0;
