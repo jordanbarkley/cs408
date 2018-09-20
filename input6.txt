@@ -1,0 +1,72 @@
+9 30 50
+NS 19
+NS 28
+NS 33
+S 35
+S 40
+NS 45
+S 51
+S 52
+S 59
+
+// testing a lot
+// expected output is 12
+
+// NUMBER LINE
+s = friend with    sword at the point
+n = friend without sword at the point
+o = opponent with  sword
+
+  n              n     s              s              n                 s  s       
+--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+ 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
+        A                                                           B
+
+// PROCESS
+1. mark irrelevant points as irrelevant (don't consider then)
+2. attempt to add length (B - A + 1) based on pairs. remember to avoid double counting consecutive 
+   pairs. Keep in mind that the length should still be calculated using (B - A + 1)! Otherwise the
+   calculations will be thrown off for odd lengths vs. even lengths.
+   
+// STEPS
+19 is irrelevant (too low)
+52 and 59 (too high)
+
+// swordedOpponents  is currently 0
+// countFirst        is currently true (default)
+33, 35 | length = 3
+NS  S  | length = 3 / 2 + 3 % 2 = 2
+// countFirst == true so don't subtract 1
+swordedOpponents += length
+countFirst = false
+// friendB.hasSword == true, do nothing with countFirst
+
+// swordedOpponents is currently 2
+// countFirst       is currently false
+35, 40 | length = 6
+S   S  | // both sworded, do nothing with length
+swordedOpponents += length
+// countFirst == false so subtract 1
+swordedOpponents -= 1
+// friendB.hasSword == true, do nothing with countFirst
+
+// swordedOpponents is currently 7
+// countFirst       is currently false
+40, 45 | length = 6
+S   NS | length = 6 / 2 + 6 % 2 = 3
+swordedOpponents += length
+// countFirst == false so subtract 1
+swordedOpponents -= 1
+// friendB.hasSword == false
+countFirst = true
+
+// swordedOpponents is currently 10
+// countFirst       is currently false
+45, 51 | length = 7
+NS  S  | length = 7 / 2 + 7 % 2 = 4
+swordedOpponents += length
+// countFirst == true so don't subtract 1
+// friendB.hasSword == true, do nothing with countFirst
+
+// calculate extra opponent
+swordedOpponents -= 1;

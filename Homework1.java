@@ -21,7 +21,8 @@ public class Homework1 {
             h.runTest("input2.txt", 0, false);
             h.runTest("input3.txt", 0, false);
             h.runTest("input4.txt", 6, false);
-            h.runTest("input5.txt", 14, false);
+            h.runTest("input5.txt", 13, false);
+            h.runTest("input6.txt", 12, false);
         }
     }
 
@@ -96,24 +97,17 @@ public class Homework1 {
             }
         }
 
-        /*
-        for (int i = 0; i < this.friends.length; i++) {
-            System.out.printf("%b\n", this.friends[i].relevant);
-        } 
-        */
-
         // init "return" value
-        int opponentsWithSword = 0;
+        int swordedOpponents = 0;
 
         // variables for algorithm
         Player friendA = new Player(1, false);
         Player friendB = new Player(1, false);
-        int totalOpponents = 0;
+        int length = 0;
 
         // declare index for friends array
         int i = 0;
-        boolean firstRun = true;
-        boolean firstSuccess = true;
+        boolean countFirst = true;
 
         // increment through irrelevant low values
         while (this.friends[i].relevant == false && i < this.friends.length) {
@@ -131,29 +125,29 @@ public class Homework1 {
                 break;
             }
             
-
-            // calculate totalOpponents represented between friendA and friendB
-            totalOpponents = friendB.timePlayed - friendA.timePlayed + 1;
-            // System.out.println(totalOpponents);
+            // calculate length represented between friendA and friendB
+            length = friendB.timePlayed - friendA.timePlayed + 1;
 
             if (friendA.hasSword && friendB.hasSword) {
+                // case: both friends have sword
+
                 // c comes from the following instruction.
                 // "If P' has the item, he predicts that the new player P also has the item."
                 // Since both players have the sword, all entries should be added. However, on
-                // any run after the first, we subtract 1 to avoid double counting. That is
-                // on the first run, we will include the whole length whereas every other run
-                // will only include length - 1.
+                // any run after a "break", we subtract 1 to avoid double counting. A break can
+                // be described as anytime as the gap caused by friendB not having a sword. See
+                // input6.txt for an example.
 
-                if (firstSuccess) {
-                    // System.out.println(totalOpponents);
-                    opponentsWithSword += totalOpponents;
-                    firstSuccess = false;
+                swordedOpponents += length;
+                if (countFirst) {
+                    countFirst = false;
                 } else {
-                    // System.out.println(totalOpponents - 1);
-                    opponentsWithSword += (totalOpponents - 1);
+                    swordedOpponents -= 1;
                 }
 
-            } else if (friendB.hasSword || friendA.hasSword) {
+            } else if (friendA.hasSword) {
+                // case: only friendA has sword
+
                 // (c / 2) comes from the following instruction.
                 // "If P' has the item, he predicts that the new player P also has the item."
                 // Since we know only one player has the sword (the both check above fails),
@@ -164,28 +158,63 @@ public class Homework1 {
                 // player P has the item if any one of them have it.""
                 // Essentially, if there's an odd number, we need to be sure to include the extra.
 
-                // System.out.println((totalOpponents / 2) + (totalOpponents % 2));
-                opponentsWithSword += (totalOpponents / 2) + (totalOpponents % 2);
+                // Lastly, this is the only case where countFirst is reset back to true
+                
+                // add sworded opponents (half or half + 1)
+                swordedOpponents += (length / 2) + (length % 2);
+                
+                // check if we should count the first point
+                if (!countFirst) {
+                    swordedOpponents -= 1;
+                }
+            
+                // update countFirst
+                countFirst = true;
+
+            } else if (friendB.hasSword) {
+                // case: only friendB has sword
+
+                // This case is essentially the same as the above. However, it does not require
+                // countFirst to be set to true.
+
+                // add sworded opponents (half or half + 1)
+                swordedOpponents += (length / 2) + (length % 2);
+
+                // check if we should count the first point and if so, set countFirst to false
+                if (countFirst) {
+                    countFirst = false;
+                } else {
+                    swordedOpponents -= 1;
+                }
             }
 
-            // update opponentsWithSword for opponents not in range (if necessary).
+            // update swordedOpponents for opponents not in range (if necessary).
+            // low
             if (friendA.timePlayed < this.A && friendA.hasSword) {
-                // System.out.println("-" + (this.A - friendA.timePlayed));
-                opponentsWithSword -= (this.A - friendA.timePlayed);
+                swordedOpponents -= (this.A - friendA.timePlayed);
             }
 
+            // high
             if (friendB.timePlayed > this.B && friendB.hasSword) {
-                // System.out.println("-" + (friendB.timePlayed - this.B));
-                opponentsWithSword -= (friendB.timePlayed - this.B);
+                swordedOpponents -= (friendB.timePlayed - this.B);
             }
 
+            // increment i and attempt loop
             i++;
         }
 
-        // account for values (values > friends[length - 1] but < values <= this.B)
-        if (friendB.relevant && this.B - friendB.timePlayed > 0) {
-            // System.out.println(this.B - friendB.timePlayed);
-            opponentsWithSword += this.B - friendB.timePlayed;
+        // In some cases, the min friend.timePlayed will be larger than A. When this is the case
+        // and min friend.hasSword == true, all opponents from A to friendA.timePlayed should be
+        // included.
+        Player friendMin = this.friends[0];
+        if (friendMin.timePlayed > this.A && friendMin.timePlayed <= this.B && friendMin.hasSword) {
+            swordedOpponents += (friendMin.timePlayed - this.A);
+        }
+
+        // Like the case above, sometimes the max friend.timePlayed will be larger than B. We should
+        // adjust for this as well.
+        if (friendB.relevant && this.B > friendB.timePlayed) {
+            swordedOpponents += (this.B - friendB.timePlayed);
         }
 
         // close scanner
@@ -196,18 +225,18 @@ public class Homework1 {
             // write opponentsWithSword to file
             try {
                 PrintWriter p = new PrintWriter("output.txt");
-                p.println(opponentsWithSword);
+                p.println(swordedOpponents);
                 p.close();
             } catch (FileNotFoundException e) {
                 System.out.println("File write faile!");
             } 
-        } else if (expected == opponentsWithSword) {
+        } else if (expected == swordedOpponents) {
             // print passed to stdout
             System.out.printf("Test '%s' passed!\n", filename);
         } else {
             // print failed to stdout
             System.out.printf("Test '%s' failed! (calculated value %d != expected value %d)\n", 
-                filename, opponentsWithSword, expected);
+                filename, swordedOpponents, expected);
         }
     }
 }
