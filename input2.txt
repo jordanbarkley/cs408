@@ -1,0 +1,15 @@
+3 1 6
+NS 1
+NS 4
+NS 6
+
+// testing if the program handles no swords but all in range correctly
+// expected output is 0
+
+// opponent results
+1   NS  closer to no sword
+2   NS  closer to no sword
+3   NS  closer to no sword
+4   NS  closer to no sword
+5   NS  equidistant to no sword
+6   NS  closer to no sword

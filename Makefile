@@ -7,6 +7,10 @@ all:
 
 # run program
 run:
+	java -jar $(PROGRAM).jar input.txt
+
+# run tests
+test:
 	java -jar $(PROGRAM).jar
 
 # generate input

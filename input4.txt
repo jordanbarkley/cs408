@@ -1,0 +1,16 @@
+4 4 9
+S 2
+S 3
+S 5
+S 6
+
+// testing if the program handles T values out of range (below A) correctly
+// expected output is 6
+
+// opponent results
+4   S   equidistant to sword
+5   S   closer to sword
+6   S   closer to sword
+7   S   closer to sword
+8   S   closer to sword
+9   S   closer to sword

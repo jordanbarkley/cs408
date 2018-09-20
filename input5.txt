@@ -1,0 +1,19 @@
+10 30 50
+NS 19
+NS 22
+NS 28
+NS 33
+NS 35
+S  40
+S  45
+S  51
+S  52
+S  59
+
+// testing if the program handles T values below A and above B correctly
+// expected output is 14 
+
+// opponent results
+>37 NS  closer to no sword
+=37 S   equidistant to both
+>37 S   closer to sword
