@@ -9,8 +9,8 @@ S 51
 S 52
 S 59
 
-// testing "breaks" in the line. basically when you have a string of o's below
-// seperated and then another start (requires counting the first element).
+// Testing "breaks" in the line. Basically when you have a string of o's below
+// stop and then another start (requires counting the first element).
 // expected output is 12
 
 // NUMBER LINE
