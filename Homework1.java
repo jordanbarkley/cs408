@@ -67,7 +67,7 @@ public class Homework1 {
         // sort friends by timePlayed
         Arrays.sort(friends);
 
-        // attempt to scrap various values from iteration
+        // attempt to scrap various friends from iteration
         // 10 30 50
         // NS 19 (scrapped, too low)
         // NS 22 (scrapped, too low)
@@ -80,7 +80,7 @@ public class Homework1 {
         // NS 52 (scrapped, too high)
         // S  59 (scrapped, too high)
 
-        // scrapping requires that there more than 2 elements in the array
+        // scrapping requires that there more than 2 friends in the array
         if (this.friends.length > 2) {
             // scrap low
             for (int i = 0; i < this.friends.length - 1; i++) {
@@ -107,6 +107,8 @@ public class Homework1 {
 
         // declare index for friends array
         int i = 0;
+
+        // variable that holds if we should count the first point in length
         boolean countFirst = true;
 
         // increment through irrelevant low values
@@ -156,14 +158,15 @@ public class Homework1 {
                 // (c % 2) comes from the following instruction.
                 // "If there are more than one closest player among his friends, he guessed the new 
                 // player P has the item if any one of them have it.""
-                // Essentially, if there's an odd number, we need to be sure to include the extra.
+                // Essentially, if there's an odd number, we need to be sure to include the extra
+                // opponent.
 
                 // Lastly, this is the only case where countFirst is reset back to true
                 
                 // add sworded opponents (half or half + 1)
                 swordedOpponents += (length / 2) + (length % 2);
                 
-                // check if we should count the first point
+                // check if we should count the first opponent.
                 if (!countFirst) {
                     swordedOpponents -= 1;
                 }
