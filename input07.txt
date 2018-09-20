@@ -1,0 +1,7 @@
+3 1 6
+NS 1
+NS 4
+NS 5
+
+// testing if the program handles no swords in range [A, B - 1]
+// expected output is 0

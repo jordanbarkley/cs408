@@ -1,0 +1,8 @@
+4 7 9
+S 2
+S 3
+S 5
+S 6
+
+// testing if the program handles sword opponents out of range (below A) correctly
+// expected output is 3

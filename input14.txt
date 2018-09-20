@@ -1,0 +1,6 @@
+2 1 4
+NS 1
+S 4
+
+// testing a midpoint on an even interval
+// expected output is 2

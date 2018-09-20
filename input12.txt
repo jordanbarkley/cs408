@@ -9,14 +9,17 @@ S 51
 S 52
 S 59
 
-// testing a lot
+// testing "breaks" in the line. basically when you have a string of o's below
+// seperated and then another start (requires counting the first element).
 // expected output is 12
 
 // NUMBER LINE
 s = friend with    sword at the point
 n = friend without sword at the point
 o = opponent with  sword
+x = opponent with  sword (out of range)
 
+                    o  o  o  o  o  o  o  o  o  o              o  o  o  x
   n              n     s              s              n                 s  s       
 --|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
  28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52

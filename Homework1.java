@@ -16,13 +16,21 @@ public class Homework1 {
         if (args.length == 1) {
             h.runTest(args[0], 0, true);
         } else {
-            h.runTest("input0.txt", 4, false);
-            h.runTest("input1.txt", 6, false);
-            h.runTest("input2.txt", 0, false);
-            h.runTest("input3.txt", 0, false);
-            h.runTest("input4.txt", 6, false);
-            h.runTest("input5.txt", 13, false);
-            h.runTest("input6.txt", 12, false);
+            h.runTest("input00.txt",  4, false);
+            h.runTest("input01.txt",  6, false);
+            h.runTest("input02.txt",  6, false);
+            h.runTest("input03.txt",  6, false);
+            h.runTest("input04.txt",  6, false);
+            h.runTest("input05.txt",  0, false);
+            h.runTest("input06.txt",  0, false);
+            h.runTest("input07.txt",  0, false);
+            h.runTest("input08.txt",  0, false);
+            h.runTest("input09.txt",  5, false);
+            h.runTest("input10.txt",  3, false);
+            h.runTest("input11.txt", 13, false);
+            h.runTest("input12.txt", 12, false);
+            h.runTest("input13.txt",  2, false);
+            h.runTest("input14.txt",  2, false);
         }
     }
 
@@ -33,7 +41,7 @@ public class Homework1 {
             s = new Scanner(new File(filename));
         } catch (FileNotFoundException fnfe) {
             // if the file does not exist
-            System.out.println("File not found! Test Fails!");
+            System.out.printf("File %s not found! Test Fails!\n", filename);
             return;
         } catch (Exception e) {
             // if something goes very wrong
@@ -111,7 +119,7 @@ public class Homework1 {
         // variable that holds if we should count the first point in length
         boolean countFirst = true;
 
-        // increment through irrelevant low values
+        // increment through irrelevant low frinds
         while (this.friends[i].relevant == false && i < this.friends.length) {
             i++;
         }
@@ -138,7 +146,7 @@ public class Homework1 {
                 // Since both players have the sword, all entries should be added. However, on
                 // any run after a "break", we subtract 1 to avoid double counting. A break can
                 // be described as anytime as the gap caused by friendB not having a sword. See
-                // input6.txt for an example.
+                // input12.txt for an example.
 
                 swordedOpponents += length;
                 if (countFirst) {
@@ -183,7 +191,7 @@ public class Homework1 {
                 // add sworded opponents (half or half + 1)
                 swordedOpponents += (length / 2) + (length % 2);
 
-                // check if we should count the first point and if so, set countFirst to false
+                // check if we should count the first opponent and if so, set countFirst to false
                 if (countFirst) {
                     countFirst = false;
                 } else {
@@ -216,8 +224,17 @@ public class Homework1 {
 
         // Like the case above, sometimes the max friend.timePlayed will be larger than B. We should
         // adjust for this as well.
-        if (friendB.relevant && this.B > friendB.timePlayed) {
+        if (friendB.relevant && this.B > friendB.timePlayed && friendB.hasSword) {
             swordedOpponents += (this.B - friendB.timePlayed);
+        }
+
+        // If the only friends exist below the range and are sworded, we need to give them all.
+        if (this.friends[0].timePlayed > this.B && this.friends[0].hasSword) {
+            swordedOpponents += this.B - this.A + 1;
+        } 
+
+        if (this.friends[this.friends.length - 1].timePlayed < this.A && this.friends[this.friends.length - 1].hasSword) {
+            swordedOpponents += this.B - this.A + 1;
         }
 
         // close scanner

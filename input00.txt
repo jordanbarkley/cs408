@@ -3,7 +3,7 @@ S 1
 NS 4
 S 6
 
-// testing given
+// testing given in range [A , B]
 // expected output is 4
 
 // opponent results

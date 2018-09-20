@@ -1,0 +1,6 @@
+2 1 3
+NS 1
+S 3
+
+// testing a midpoint on an odd interval
+// expected output is 2
